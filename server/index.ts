@@ -9,6 +9,7 @@ type req = {
 // response
 type res = {
   json: Function;
+  status: Function;
   send: Function;
 };
 // callback route
