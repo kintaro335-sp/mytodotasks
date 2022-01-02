@@ -25,49 +25,53 @@ class tasksService {
     return this.res;
   }
 
-  getTasks() {
-    db.query('SELECT * FROM tareas', async (err, results) => {
-      if (err) {
-        console.log(err);
-      }
-      this.tasks = (await results) || [];
-    });
+  async getTasks() {
+    await db
+      .query('SELECT * FROM tareas', async (err, results) => {
+        if (err) {
+          console.log(err);
+        }
+        this.tasks = (await results) || [];
+      })
+      .on('end', () => {});
   }
 
-  find() {
-    this.getTasks();
+  async find() {
+    await this.getTasks();
     return this.tasks;
   }
 
-  findOne(id: string) {
-    this.getTasks();
+  async findOne(id: string) {
+    await this.getTasks();
     return this.tasks.find((task) => task.id === id);
   }
 
-  create(task: taskT) {
-    taskSchema.isValid(task).then((isValid) => {
+  async create(task: taskT): Promise<response> {
+    await taskSchema.isValid(task).then(async (isValid) => {
       if (isValid) {
         const { id, nombre, descripcion, done } = task;
-        db.query(
-          `INSERT INTO tareas (id, nombre, descripcion, done) VALUES ("${id}", "${nombre}", "${descripcion}", ${done})`,
-          (err, results, fie) => {
-            if (err) {
-              this.setRes({
-                code: 500,
-                data: task,
-                message: err.message,
-                status: 'error'
-              });
-            } else {
-              this.setRes({
-                code: 201,
-                data: task,
-                message: 'created',
-                status: 'ok'
-              });
+        await db
+          .query(
+            `INSERT INTO tareas (id, nombre, descripcion, done) VALUES ("${id}", "${nombre}", "${descripcion}", ${done})`,
+            (err, results, fie) => {
+              if (err) {
+                this.setRes({
+                  code: 500,
+                  data: task,
+                  message: err.message,
+                  status: 'error'
+                });
+              } else {
+                this.setRes({
+                  code: 201,
+                  data: task,
+                  message: 'created',
+                  status: 'ok'
+                });
+              }
             }
-          }
-        );
+          )
+          .on('end', () => {});
       } else {
         this.setRes({
           code: 400,
@@ -80,8 +84,8 @@ class tasksService {
     return this.getRes();
   }
 
-  update(task: taskT) {
-    taskSchema.isValid(task).then((isValid) => {
+  async update(task: taskT): Promise<response> {
+    await taskSchema.isValid(task).then((isValid) => {
       if (isValid) {
         const { nombre, descripcion, done } = task;
         db.query(
@@ -103,7 +107,7 @@ class tasksService {
               });
             }
           }
-        );
+        ).on('end', () => {});
       } else {
         this.setRes({
           status: 'error',
@@ -116,24 +120,27 @@ class tasksService {
     return this.getRes();
   }
 
-  delete(id: string): response {
-    db.query(`DELETE FROM tareas WHERE id="${id}"`, (err, results, fie) => {
-      if (err) {
-        this.setRes({
-          status: 'error',
-          code: 500,
-          message: `error; ${err.message}`,
-          data: id
-        });
-      } else {
-        this.setRes({
-          status: 'ok',
-          code: 202,
-          message: `deleted`,
-          data: id
-        });
-      }
-    });
+  async delete(id: string): Promise<response> {
+    await db
+      .query(`DELETE FROM tareas WHERE id="${id}"`, (err, results, fie) => {
+        if (err) {
+          this.setRes({
+            status: 'error',
+            code: 500,
+            message: `error; ${err.message}`,
+            data: id
+          });
+        } else {
+          this.setRes({
+            status: 'ok',
+            code: 202,
+            message: `deleted`,
+            data: id
+          });
+          console.log('actualizar');
+        }
+      })
+      .on('end', () => {});
     return this.getRes();
   }
 }

@@ -9,8 +9,8 @@ type params = {
   id: string;
 };
 
-tasksRouter.get('/', (req, res) => {
-  const data = service.find();
+tasksRouter.get('/', async (req, res) => {
+  const data = await service.find();
   res.status(200).json({
     status: 'ok',
     code: 200,
@@ -19,9 +19,9 @@ tasksRouter.get('/', (req, res) => {
   });
 });
 
-tasksRouter.get('/:id', (req, res) => {
+tasksRouter.get('/:id', async (req, res) => {
   const { id }: params = req.params;
-  const data = service.findOne(id);
+  const data = await service.findOne(id);
   const codeStatus = data === undefined ? 404 : 200;
   const message = data === undefined ? 'not found' : 'found';
   res.status(codeStatus).json({
@@ -32,24 +32,24 @@ tasksRouter.get('/:id', (req, res) => {
   });
 });
 
-tasksRouter.post('/', (req, res) => {
+tasksRouter.post('/', async (req, res) => {
   const body: taskT = req.body;
   body.id = uuidv1();
-  const response: response = service.create(body);
+  const response: response = await service.create(body);
   res.status(response.code).json(response);
 });
 
-tasksRouter.put('/:id', (req, res) => {
+tasksRouter.put('/:id', async (req, res) => {
   const { id }: params = req.params;
   const body: taskT = req.body;
   body.id = id;
-  const response: response = service.update(body);
+  const response: response = await service.update(body);
   res.status(response.code).json(response);
 });
 
-tasksRouter.delete('/:id', (req, res) => {
+tasksRouter.delete('/:id', async (req, res) => {
   const { id }: params = req.params;
-  const response: response = service.delete(id);
+  const response: response = await service.delete(id);
   res.status(response.code).json(response);
 });
 
