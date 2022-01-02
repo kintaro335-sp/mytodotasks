@@ -41,7 +41,7 @@ class tasksService {
 
   findOne(id: string) {
     this.getTasks();
-    return this.tasks.filter((task) => task.id === id);
+    return this.tasks.find((task) => task.id === id);
   }
 
   create(task: taskT) {
