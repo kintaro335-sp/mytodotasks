@@ -38,14 +38,15 @@ class tasksService {
 
   async create(task: taskT): Promise<response> {
     return new Promise((resolve, reject) =>
-      taskSchema.isValid(task).then((isValid) => {
-        if (isValid) {
+      taskSchema
+        .validate(task)
+        .then(() => {
           const { id, nombre, descripcion, done } = task;
           db.query(
             `INSERT INTO tareas (id, nombre, descripcion, done) VALUES ("${id}", "${nombre}", "${descripcion}", ${done})`,
             (err, results, fie) => {
               if (err) {
-                reject({
+                resolve({
                   code: 500,
                   data: task,
                   message: err.message,
@@ -60,29 +61,30 @@ class tasksService {
                 });
               }
             }
-          ).on('end', () => {});
-        } else {
-          reject({
+          );
+        })
+        .catch((err) => {
+          resolve({
             code: 400,
             data: task,
-            message: 'no valid data',
+            message: err.errors.toString(),
             status: 'ok'
           });
-        }
-      })
+        })
     );
   }
 
   async update(task: taskT): Promise<response> {
     return new Promise((resolve, reject) =>
-      taskSchema.isValid(task).then(async (isValid) => {
-        if (isValid) {
+      taskSchema
+        .validate(task)
+        .then(() => {
           const { nombre, descripcion, done } = task;
-          await db.query(
+          db.query(
             `UPDATE tareas SET nombre="${nombre}", descripcion="${descripcion}", done=${done} WHERE id="${task.id}"`,
             (err, results, fie) => {
               if (err) {
-                reject({
+                resolve({
                   status: 'error',
                   code: 500,
                   message: err.message,
@@ -90,7 +92,7 @@ class tasksService {
                 });
               } else {
                 resolve({
-                  status: 'error',
+                  status: 'ok',
                   code: 202,
                   message: 'updated',
                   data: task
@@ -98,15 +100,15 @@ class tasksService {
               }
             }
           );
-        } else {
-          reject({
+        })
+        .catch((err) => {
+          resolve({
             status: 'error',
-            code: 500,
-            message: 'error: no valid data',
+            code: 400,
+            message: err.errors.toString(),
             data: task
           });
-        }
-      })
+        })
     );
   }
 
