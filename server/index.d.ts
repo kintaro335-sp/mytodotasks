@@ -14,8 +14,10 @@ type res = {
 };
 // callback route
 type callbakRoute = (req: req, res: res) => void;
+type callbakRouteN = (req: req, res: res, next:Function) => void;
 // route
 type route = (route: string, callback: callbakRoute) => void;
+type routeN = (route: string, callback: callbakRouteN) => void;
 
 type appT = {
   listen: Function;
