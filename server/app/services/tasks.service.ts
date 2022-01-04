@@ -1,5 +1,6 @@
 import db from '../mysql/mysqlclient';
 import taskSchema from '../objects/task';
+import boom from '@hapi/boom';
 
 interface taskI {
   id: string;
@@ -15,8 +16,7 @@ class tasksService {
     return new Promise((resolve, reject) =>
       db.query('SELECT * FROM tareas', (err, results) => {
         if (err) {
-          console.log(err);
-          reject(err);
+          throw boom.internal(err.message, err, 500);
         } else {
           resolve(results);
         }
@@ -28,7 +28,7 @@ class tasksService {
     return new Promise((resolve, reject) =>
       db.query(`SELECT * FROM tareas WHERE id="${id}"`, (err, results) => {
         if (err) {
-          reject(err);
+          throw boom.internal(err.message, err, 500);
         } else {
           resolve(results[0]);
         }
@@ -46,12 +46,7 @@ class tasksService {
             `INSERT INTO tareas (id, nombre, descripcion, done) VALUES ("${id}", "${nombre}", "${descripcion}", ${done})`,
             (err, results, fie) => {
               if (err) {
-                resolve({
-                  code: 500,
-                  data: task,
-                  message: err.message,
-                  status: 'error'
-                });
+                throw boom.internal(err.message, err, 500);
               } else {
                 resolve({
                   code: 201,
@@ -84,12 +79,7 @@ class tasksService {
             `UPDATE tareas SET nombre="${nombre}", descripcion="${descripcion}", done=${done} WHERE id="${task.id}"`,
             (err, results, fie) => {
               if (err) {
-                resolve({
-                  status: 'error',
-                  code: 500,
-                  message: err.message,
-                  data: task
-                });
+                throw boom.internal(err.message, err, 500);
               } else {
                 resolve({
                   status: 'ok',
@@ -116,12 +106,7 @@ class tasksService {
     return new Promise((resolve, reject) =>
       db.query(`DELETE FROM tareas WHERE id="${id}"`, (err, results, fie) => {
         if (err) {
-          reject({
-            status: 'error',
-            code: 500,
-            message: `error; ${err.message}`,
-            data: id
-          });
+          throw boom.internal(err.message, err, 500);
         } else {
           resolve({
             status: 'ok',

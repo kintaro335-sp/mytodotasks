@@ -6,7 +6,7 @@ const express = require('express');
 const app: appT = express();
 const port = process.env.SERVER_PORT || 4000;
 const routes = require('./app/routes');
-const { errorHandler, logErrors }:any = require('./app/middlewares/error.handler');
+const { errorHandler, logErrors, boomErrorHandler }:any = require('./app/middlewares/error.handler');
 
 app.use(express.json());
 
@@ -19,9 +19,10 @@ routes(app);
 
 //middlewares
 
+app.use(logErrors);
+app.use(boomErrorHandler);
 app.use(errorHandler);
 
-app.use(logErrors);
 
 app.listen(port, () => {
   console.log('listening on port ' + port);
