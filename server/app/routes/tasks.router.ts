@@ -1,6 +1,7 @@
 /// <reference path="../../index.d.ts" />
 import express from 'express';
 import { v1 as uuidv1 } from 'uuid';
+import boom from '@hapi/boom';
 const tasksService = require('../services/tasks.service');
 const tasksRouter: routerT = express.Router();
 const service = new tasksService();
@@ -11,7 +12,18 @@ type params = {
 
 tasksRouter.get('/', async (req, res, next) => {
   try {
-    const data = await service.find();
+    const queryParams = req.query;
+    if (queryParams.limit && queryParams.page) {
+      queryParams.limit = Number(queryParams.limit);
+      queryParams.page = Number(queryParams.page);
+      if (isNaN(queryParams.limit)) {
+        throw boom.badRequest('param limit is not a number');
+      }
+      if (isNaN(queryParams.page)) {
+        throw boom.badRequest('param page is not a number');
+      }
+    }
+    const data = await service.find(queryParams);
     res.status(200).json({
       status: 'ok',
       code: 200,

@@ -9,12 +9,21 @@ interface taskI {
   fecha: any;
 }
 
+type queryParamsTask = {
+  limit: number;
+  page: number;
+};
+
 class tasksService {
   constructor() {}
 
-  async find(): Promise<Array<taskI>> {
+  async find({ limit, page }: queryParamsTask): Promise<Array<taskI>> {
+    const limitP =
+      page !== undefined && limit !== undefined
+        ? `LIMIT ${page}, ${Number(limit)}`
+        : '';
     return new Promise((resolve, reject) =>
-      db.query('SELECT * FROM tareas', (err, results) => {
+      db.query(`SELECT * FROM tareas ${limitP}`, (err, results) => {
         if (err) {
           throw boom.internal(err.message, err, 500);
         } else {

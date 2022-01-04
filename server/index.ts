@@ -19,10 +19,9 @@ routes(app);
 
 //middlewares
 
-app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
-
+app.use(logErrors);
 
 app.listen(port, () => {
   console.log('listening on port ' + port);
