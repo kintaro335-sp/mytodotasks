@@ -1,5 +1,5 @@
-import db from '../mysql/mysqlclient';
-import taskSchema from '../objects/task';
+import db from '../libs/mysql/mysqlclient';
+import taskSchema from '../schemas/task';
 import boom from '@hapi/boom';
 
 interface taskI {
