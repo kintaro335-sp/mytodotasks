@@ -1,18 +1,7 @@
+/// <reference path="../../index.d.ts" />
 import db from '../libs/mysql/mysqlclient';
 import taskSchema from '../schemas/task';
 import boom from '@hapi/boom';
-
-interface taskI {
-  id: string;
-  nombre: string;
-  descripcion: string;
-  fecha: any;
-}
-
-type queryParamsTask = {
-  limit: number;
-  page: number;
-};
 
 class tasksService {
   constructor() {}

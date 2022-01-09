@@ -47,3 +47,15 @@ type response = {
   message: string;
   data: string | Array<taskT> | taskT;
 }
+
+interface taskI {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  fecha: any;
+}
+
+type queryParamsTask = {
+  limit: number;
+  page: number;
+};
