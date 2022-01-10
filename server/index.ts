@@ -2,12 +2,28 @@
 const dotenv = require('dotenv');
 dotenv.config();
 // app
+const sessions = require('express-session');
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const app: appT = express();
 const port = process.env.SERVER_PORT || 4000;
 const routes = require('./app/routes');
-const { errorHandler, logErrors, boomErrorHandler }:any = require('./app/middlewares/error.handler');
+const {
+  errorHandler,
+  logErrors,
+  boomErrorHandler
+}: any = require('./app/middlewares/error.handler');
 
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(
+  sessions({
+    secret: process.env.COOKIE_SECRET || 'cat',
+    saveUninitialized: true,
+    cookie: { maxAge: oneDay },
+    resave: false
+  })
+);
+app.use(cookieParser());
 app.use(express.json());
 
 // routes

@@ -13,26 +13,26 @@ type res = {
   send: Function;
 };
 // callback route
-type callbakRoute = (req: req, res: res, next:Function) => void;
+type callbakRoute = (req: any, res: res, next: Function) => void;
 // route
 type route = (route: string, callback: callbakRoute) => void;
 
 type appT = {
   listen: Function;
   use: Function;
-  get: route ;
+  get: route;
   post: route;
-  put: route ;
-  delete: route ;
-};
-
-type routerT = {
-  use: Function;
-  get: route ;
-  post: route ;
-  put: route ;
+  put: route;
   delete: route;
 };
+
+interface routerT {
+  use: Function;
+  get: route;
+  post: route;
+  put: route;
+  delete: route;
+}
 
 type taskT = {
   id: string | undefined;
@@ -43,10 +43,10 @@ type taskT = {
 
 type response = {
   status: string;
-  code : number;
+  code: number;
   message: string;
   data: string | Array<taskT> | taskT;
-}
+};
 
 interface taskI {
   id: string;
@@ -59,3 +59,9 @@ type queryParamsTask = {
   limit: number;
   page: number;
 };
+
+interface userO {
+  id: string;
+  username: string;
+  password: string;
+}
