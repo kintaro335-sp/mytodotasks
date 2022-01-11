@@ -45,7 +45,7 @@ type response = {
   status: string;
   code: number;
   message: string;
-  data: string | Array<taskT> | taskT;
+  data: string | Array<taskT> | taskT | undefined;
 };
 
 interface taskI {
@@ -56,6 +56,7 @@ interface taskI {
 }
 
 type queryParamsTask = {
+  userid: string;
   limit: number;
   page: number;
 };

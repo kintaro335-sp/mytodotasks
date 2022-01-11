@@ -1,10 +1,101 @@
 /// <reference path="../../index.d.ts" />
 import db from '../libs/mysql/mysqlclient';
 import userSchema from '../schemas/users.schema';
+import { SHA256 } from 'crypto-js';
+import boom from '@hapi/boom';
 
 class usersService {
-  async resgiterUser(user: userO) {
-    return new Promise((resolve, reject) => {});
+  async userAlreadyExist(username: string) {
+    return new Promise((resolve, reject) =>
+      db.query(
+        `SELECT COUNT(*) AS users from users where username = "${username}"`,
+        (err, results, fie) => {
+          if (err) {
+            throw boom.internal(err.message, err, 500);
+          }
+          resolve(results[0].users !== 0);
+        }
+      )
+    );
+  }
+
+  async login(user: userO): Promise<response> {
+    return new Promise((resolve, resject) =>
+      userSchema
+        .validate(user)
+        .then(() => {
+          const { username, password } = user;
+          const encryptedP = SHA256(password).toString();
+          db.query(
+            `SELECT id FROM users WHERE username = "${username}" && passwordu = "${encryptedP}" LIMIT 1`,
+            (err, results, fie) => {
+              if (err) {
+                throw boom.internal(err.message, err, 500);
+              }
+              const userid = results[0]?.id;
+              if (!Boolean(userid)) {
+                resolve({
+                  code: 400,
+                  data: undefined,
+                  message: 'username or password incorrect',
+                  status: 'error'
+                });
+              }
+              resolve({
+                code: 200,
+                data: userid,
+                message: 'logged',
+                status: 'ok'
+              });
+            }
+          );
+        })
+        .catch((err) => {
+          resolve({
+            code: 400,
+            data: '',
+            message: err.errors.toString(),
+            status: 'error'
+          });
+        })
+    );
+  }
+
+  async registerUser(user: userO): Promise<response> {
+    return new Promise((resolve, reject) =>
+      userSchema
+        .validate(user)
+        .then(async () => {
+          const { id, username, password } = user;
+          const encryptedP = SHA256(password).toString();
+          const userExist = await this.userAlreadyExist(username);
+          if (userExist) {
+            throw boom.conflict('this user already exist');
+          }
+          db.query(
+            `INSERT INTO users (id, username, passwordu) VALUES ("${id}", "${username}", "${encryptedP}")`,
+            (err, results, fie) => {
+              if (err) {
+                throw boom.internal(err.message, err, 500);
+              }
+              resolve({
+                code: 201,
+                data: '',
+                message: 'user registred',
+                status: 'ok'
+              });
+            }
+          );
+        })
+        .catch((err) => {
+          resolve({
+            code: 400,
+            data: '',
+            message: err.errors.toString(),
+            status: 'error'
+          });
+        })
+    );
   }
 }
 
