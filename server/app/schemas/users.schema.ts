@@ -12,4 +12,12 @@ const userSchema = yup.object().shape({
   password: passwordSchema.required()
 });
 
+const changePasswordSchema = yup.object().shape({
+  userid: useridSchema.required(),
+  password: passwordSchema.required(),
+  newPassword: passwordSchema.required()
+});
+
+export { changePasswordSchema };
+
 export default userSchema;

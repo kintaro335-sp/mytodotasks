@@ -1,6 +1,6 @@
 /// <reference path="../../index.d.ts" />
 import db from '../libs/mysql/mysqlclient';
-import userSchema from '../schemas/users.schema';
+import userSchema, { changePasswordSchema } from '../schemas/users.schema';
 import { SHA256 } from 'crypto-js';
 import boom from '@hapi/boom';
 
@@ -84,6 +84,67 @@ class usersService {
                 message: 'user registred',
                 status: 'ok'
               });
+            }
+          );
+        })
+        .catch((err) => {
+          resolve({
+            code: 400,
+            data: '',
+            message: err.errors.toString(),
+            status: 'error'
+          });
+        })
+    );
+  }
+
+  async setPassword(userid: string, newPassword: string): Promise<response> {
+    const newPasswdE = SHA256(newPassword).toString();
+    return new Promise((resolve, reject) =>
+      db.query(
+        `UPDATE users SET passwordu="${newPasswdE}" WHERE id="${userid}"`,
+        (err, results, fie) => {
+          if (err) {
+            throw boom.internal(err.message, err, 500);
+          }
+          resolve({
+            code: 200,
+            data: '',
+            message: 'password changed',
+            status: 'ok'
+          });
+        }
+      )
+    );
+  }
+
+  async changePassword(user: userCP): Promise<response> {
+    return new Promise((resolve, reject) =>
+      changePasswordSchema
+        .validate(user)
+        .then(() => {
+          const { userid, password, newPassword } = user;
+          db.query(
+            `SELECT passwordu FROM users WHERE id="${userid}" LIMIT 1`,
+            async (err, results, fie) => {
+              if (err) {
+                throw boom.internal(err.message, err, 500);
+              }
+              if (results.length === 0) {
+                throw boom.badRequest('user does not exist');
+              }
+              const passwdu = results[0].passwordu;
+              const passwdIn = SHA256(password).toString();
+              if (passwdu === passwdIn) {
+                resolve(await this.setPassword(userid, newPassword));
+              } else {
+                resolve({
+                  code: 400,
+                  data: undefined,
+                  message: 'incorrect password',
+                  status: 'error'
+                });
+              }
             }
           );
         })

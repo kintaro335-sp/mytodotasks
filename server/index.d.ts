@@ -66,3 +66,9 @@ interface userO {
   username: string;
   password: string;
 }
+
+interface userCP {
+  userid: string;
+  password: string;
+  newPassword: string;
+}

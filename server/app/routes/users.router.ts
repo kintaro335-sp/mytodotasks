@@ -56,4 +56,19 @@ usersRouter.post('/register', async (req, res, next) => {
   }
 });
 
+usersRouter.put('/password', async (req, res, next) => {
+  try {
+    const userid = req.session.userid;
+    if (!userid) {
+      throw boom.badRequest('you must loggin first');
+    }
+    const userCP = req.body;
+    userCP.userid = userid;
+    const resp: response = await userService.changePassword(userCP);
+    res.status(resp.code).json(resp);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = usersRouter;
