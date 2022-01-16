@@ -45,7 +45,7 @@ type response = {
   status: string;
   code: number;
   message: string;
-  data: string | Array<taskT> | taskT | undefined;
+  data: string | Array<taskT> | taskT | undefined | boolean;
 };
 
 interface taskI {

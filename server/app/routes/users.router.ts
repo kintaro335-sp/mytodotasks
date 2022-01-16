@@ -6,12 +6,28 @@ const usersService = require('../services/users.service');
 const usersRouter: routerT = express.Router();
 const userService = new usersService();
 
-usersRouter.get('/', (req, res, next) => {
+usersRouter.get('/', async (req, res, next) => {
   try {
-    console.log(req.session);
-    res.json({
-      message: 'a'
-    });
+    const userid = req.session.userid;
+    if (!userid) {
+      const response: response = {
+        code: 200,
+        data: false,
+        message: 'not logged',
+        status: 'ok'
+      };
+      res.json(response);
+    } else {
+      const response: response = {
+        code: 200,
+        data: true,
+        message: '',
+        status: 'ok'
+      };
+      const userExist = await userService.userAlreadyExist(userid);
+      response.data = userExist;
+      res.json(response);
+    }
   } catch (err) {
     next(err);
   }

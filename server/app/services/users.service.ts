@@ -5,7 +5,21 @@ import { SHA256 } from 'crypto-js';
 import boom from '@hapi/boom';
 
 class usersService {
-  async userAlreadyExist(username: string) {
+
+  async userAlreadyExist(userid: string) {
+    return new Promise((resolve, reject) =>
+      db.query(
+        `SELECT COUNT(*) AS users from users where id = "${userid}"`,
+        (err, results, fie) => {
+          if (err) {
+            throw boom.internal(err.message, err, 500);
+          }
+          resolve(results[0].users !== 0);
+        }
+      )
+    );
+  }
+  async userNameAlreadyExist(username: string) {
     return new Promise((resolve, reject) =>
       db.query(
         `SELECT COUNT(*) AS users from users where username = "${username}"`,
@@ -68,7 +82,7 @@ class usersService {
         .then(async () => {
           const { id, username, password } = user;
           const encryptedP = SHA256(password).toString();
-          const userExist = await this.userAlreadyExist(username);
+          const userExist = await this.userNameAlreadyExist(username);
           if (userExist) {
             throw boom.conflict('this user already exist');
           }
