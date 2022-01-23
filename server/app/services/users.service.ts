@@ -49,7 +49,7 @@ class usersService {
               const userid = results[0]?.id;
               if (!Boolean(userid)) {
                 resolve({
-                  code: 400,
+                  code: 200,
                   data: undefined,
                   message: 'username or password incorrect',
                   status: 'error'
