@@ -4,6 +4,7 @@ dotenv.config();
 // app
 const sessions = require('express-session');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const express = require('express');
 const app: appT = express();
 const port = process.env.SERVER_PORT || 4000;
@@ -15,6 +16,7 @@ const {
 }: any = require('./app/middlewares/error.handler');
 
 const oneDay = 1000 * 60 * 60 * 24;
+app.use(cors());
 app.use(
   sessions({
     secret: process.env.COOKIE_SECRET || 'cat',
