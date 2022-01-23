@@ -16,7 +16,10 @@ const {
 }: any = require('./app/middlewares/error.handler');
 
 const oneDay = 1000 * 60 * 60 * 24;
-app.use(cors());
+const corsOptions = {
+  origin: '*',
+  credentials: true };
+app.use(cors(corsOptions));
 app.use(
   sessions({
     secret: process.env.COOKIE_SECRET || 'cat',
