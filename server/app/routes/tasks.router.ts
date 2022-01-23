@@ -43,7 +43,7 @@ tasksRouter.get('/:id', async (req, res, next) => {
   try {
     const userid = req.session.userid;
     if (!Boolean(userid)) {
-      throw boom.unauthorized('unauthorized, please loggig');
+      throw boom.unauthorized('unauthorized, please login');
     }
     const { id }: params = req.params;
     const data = await service.findOne(id, userid);

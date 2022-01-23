@@ -39,6 +39,7 @@ usersRouter.post('/', async (req, res, next) => {
     const resp: response = await userService.login(user);
     const session = req.session;
     session.userid = resp.data;
+    session.datelogged = new Date();
     resp.data = '';
     res.status(resp.code).json(resp);
   } catch (err) {
