@@ -41,11 +41,16 @@ type taskT = {
   descripcion: string;
 };
 
+type userT = {
+  username: string;
+  logged: boolean;
+}
+
 type response = {
   status: string;
   code: number;
   message: string;
-  data: string | Array<taskT> | taskT | undefined | boolean;
+  data: string | Array<taskT> | taskT | undefined | boolean  | userT;
 };
 
 interface taskI {

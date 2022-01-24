@@ -12,7 +12,7 @@ usersRouter.get('/', async (req, res, next) => {
     if (!userid) {
       const response: response = {
         code: 200,
-        data: false,
+        data: { username: '', logged: false },
         message: 'not logged',
         status: 'ok'
       };
@@ -20,7 +20,7 @@ usersRouter.get('/', async (req, res, next) => {
     } else {
       const response: response = {
         code: 200,
-        data: true,
+        data: { username: '', logged: false },
         message: '',
         status: 'ok'
       };

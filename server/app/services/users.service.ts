@@ -5,16 +5,20 @@ import { SHA256 } from 'crypto-js';
 import boom from '@hapi/boom';
 
 class usersService {
-
-  async userAlreadyExist(userid: string) {
+  async userAlreadyExist(userid: string): Promise<userT> {
     return new Promise((resolve, reject) =>
       db.query(
-        `SELECT COUNT(*) AS users from users where id = "${userid}"`,
+        `SELECT username from users where id = "${userid}"`,
         (err, results, fie) => {
           if (err) {
             throw boom.internal(err.message, err, 500);
           }
-          resolve(results[0].users !== 0);
+          if (results.length !== 0) {
+            resolve({ username: '', logged: false });
+          } else {
+            const username = results[0];
+            resolve({ username, logged: true });
+          }
         }
       )
     );
