@@ -13,10 +13,10 @@ class usersService {
           if (err) {
             throw boom.internal(err.message, err, 500);
           }
-          if (results.length !== 0) {
+          if (results.length === 0) {
             resolve({ username: '', logged: false });
           } else {
-            const username = results[0];
+            const username = results[0].username;
             resolve({ username, logged: true });
           }
         }
