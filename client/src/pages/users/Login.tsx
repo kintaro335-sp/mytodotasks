@@ -1,11 +1,15 @@
 import React from 'react';
-import {} from '@mui/material';
+import { Box } from '@mui/material';
 import { LoginForm } from 'src/components/users/login';
 
 export default function Login(): JSX.Element {
   return (
-    <>
-      <LoginForm />
-    </>
+    <Box
+      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+    >
+      <Box>
+        <LoginForm />
+      </Box>
+    </Box>
   );
 }

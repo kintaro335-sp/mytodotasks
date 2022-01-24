@@ -30,6 +30,10 @@ export default function LoginForm(): JSX.Element {
               await login(username, password);
               setSubmitting(false);
             }}
+            validationSchema={yup.object().shape({
+              username: yup.string().required('required'),
+              password: yup.string().required('required')
+            })}
           >
             <Form>
               <Grid container spacing={3}>
@@ -37,11 +41,20 @@ export default function LoginForm(): JSX.Element {
                   <Field
                     id="username"
                     name="username"
-                    render={({ field, form: { values } }: FieldProps) => (
+                    render={({
+                      field,
+                      form: { values, errors, touched }
+                    }: FieldProps) => (
                       <TextField
                         label="Nombre de usuario"
                         {...field}
                         value={values.username}
+                        error={
+                          Boolean(touched.password) && Boolean(errors.password)
+                        }
+                        helperText={
+                          Boolean(touched.password) && errors.password
+                        }
                       />
                     )}
                   />
@@ -50,19 +63,30 @@ export default function LoginForm(): JSX.Element {
                   <Field
                     id="password"
                     name="password"
-                    render={({ field, form: { values } }: FieldProps) => (
+                    render={({
+                      field,
+                      form: { values, errors, touched }
+                    }: FieldProps) => (
                       <TextField
                         label="contraseña"
                         type="password"
                         {...field}
                         value={values.password}
+                        error={
+                          Boolean(touched.password) && Boolean(errors.password)
+                        }
+                        helperText={
+                          Boolean(touched.password) && errors.password
+                        }
                       />
                     )}
                   />
                 </Grid>
               </Grid>
-              <Box>
-                <LoadingButton type="submit">submit</LoadingButton>
+              <Box sx={{ padding: '2%' }}>
+                <LoadingButton variant="contained" type="submit">
+                  Login
+                </LoadingButton>
               </Box>
             </Form>
           </Formik>
