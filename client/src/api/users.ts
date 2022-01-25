@@ -19,6 +19,19 @@ export async function login(
   });
 }
 
+export async function logout(): Promise<response> {
+  return new Promise((resolve, reject) => {
+    apiI
+      .get(`${APIURL}/user/logout`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 export async function isLogged(): Promise<response> {
   return new Promise((resolve, reject) => {
     apiI

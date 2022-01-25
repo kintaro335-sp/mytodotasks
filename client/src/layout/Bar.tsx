@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Typography, Button } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Button,
+  Menu,
+  MenuItem
+} from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
+import { logout } from 'src/api/users';
 import useAuth from 'src/hooks/useAuth';
 
 export default function Bar() {
-  const { logged, username } = useAuth();
+  const { logged, username, checkAuth } = useAuth();
+  const [open, setOpen] = useState<boolean>(false);
+  const menuRef = useRef(null);
+
+  const clickOpen = () => {
+    setOpen(true);
+  };
+
+  const clickClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -13,7 +32,7 @@ export default function Bar() {
         <Toolbar>
           {logged && (
             <>
-              <IconButton>
+              <IconButton onClick={clickOpen} ref={menuRef}>
                 <AccountCircle />
               </IconButton>
               <Typography variant="subtitle1">{username}</Typography>
@@ -26,6 +45,17 @@ export default function Bar() {
           )}
         </Toolbar>
       </AppBar>
+      <Menu open={open} onClose={clickClose} anchorEl={menuRef.current}>
+        <MenuItem
+          onClick={async () => {
+            clickClose();
+            await logout();
+            await checkAuth();
+          }}
+        >
+          Cerrar sesión
+        </MenuItem>
+      </Menu>
     </>
   );
 }
