@@ -50,7 +50,8 @@ usersRouter.post('/', async (req, res, next) => {
 usersRouter.get('/logout', (req, res, next) => {
   try {
     req.session.destroy();
-    res.status(200).json({ message: 'logged out' });
+    const response: response = {code: 200, data: '', message: 'logged out', status: 'OK'}
+    res.status(response.code).json(response);
   } catch (err) {
     next(err);
   }
