@@ -12,8 +12,11 @@ import * as yup from 'yup';
 // eslint-disable-next-line
 import { Form, Formik, Field, FieldProps } from 'formik';
 import { login } from 'src/api/users';
+import useAuth from 'src/hooks/useAuth';
 
 export default function LoginForm(): JSX.Element {
+  const { checkAuth } = useAuth();
+
   return (
     <>
       <Card>
@@ -28,6 +31,7 @@ export default function LoginForm(): JSX.Element {
               setSubmitting(true);
               const { username, password } = values;
               await login(username, password);
+              await checkAuth();
               setSubmitting(false);
             }}
             validationSchema={yup.object().shape({

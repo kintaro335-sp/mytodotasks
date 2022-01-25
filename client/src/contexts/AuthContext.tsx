@@ -2,16 +2,20 @@
 import React, { useState, useEffect, createContext, useCallback } from 'react';
 import { isLogged } from 'src/api/users';
 
-export const authContext = createContext({ username: '', logged: false, checkAuth: ()=> {} });
+export const authContext = createContext({
+  username: '',
+  logged: false,
+  checkAuth: async () => {}
+});
 
 export default function AuthContext({ children }: any) {
-  const [username, setUsername] = useState('');
-  const [logged, setLogged] = useState(false);
+  const [username, setUsername] = useState<string>('');
+  const [logged, setLogged] = useState<boolean>(false);
 
-  const checkAuth = useCallback(() => {
-    isLogged().then((user: userT) => {
-      setUsername(user.username);
-      setLogged(user.logged);
+  const checkAuth = useCallback(async () => {
+    await isLogged().then((response) => {
+      setUsername(response.data.username);
+      setLogged(response.data.logged);
     });
   }, []);
 
