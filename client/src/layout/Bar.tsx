@@ -39,9 +39,14 @@ export default function Bar() {
             </>
           )}
           {!logged && (
-            <Button variant="contained" component={NavLink} to="/login">
-              Login
-            </Button>
+            <>
+              <Button variant="contained" component={NavLink} to="/login">
+                Login
+              </Button>
+              <Button variant="contained" component={NavLink} to="/register">
+                Register
+              </Button>
+            </>
           )}
         </Toolbar>
       </AppBar>

@@ -53,7 +53,7 @@ class usersService {
               const userid = results[0]?.id;
               if (!Boolean(userid)) {
                 resolve({
-                  code: 200,
+                  code: 400,
                   data: undefined,
                   message: 'username or password incorrect',
                   status: 'error'
@@ -106,12 +106,22 @@ class usersService {
           );
         })
         .catch((err) => {
-          resolve({
-            code: 400,
-            data: '',
-            message: err.errors.toString(),
-            status: 'error'
-          });
+          if (err.isBoom) {
+            const out = err.output;
+            resolve({
+              code: out.statusCode,
+              data: '',
+              message: out.payload.message,
+              status: 'error'
+            });
+          } else {
+            resolve({
+              code: 400,
+              data: '',
+              message: err.errors.toString(),
+              status: 'error'
+            });
+          }
         })
     );
   }

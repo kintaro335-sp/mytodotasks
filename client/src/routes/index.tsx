@@ -1,5 +1,5 @@
 import { useRoutes } from 'react-router-dom';
-import { Login } from 'src/pages/users';
+import { Login, Register } from 'src/pages/users';
 
 export default function Rutas() {
   return useRoutes([
@@ -7,6 +7,7 @@ export default function Rutas() {
       path: '/',
       element: <>element</>
     },
-    { path: '/login', element: <Login /> }
+    { path: '/login', element: <Login /> },
+    { path: '/register', element: <Register /> }
   ]);
 }

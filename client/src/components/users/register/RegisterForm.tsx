@@ -1,4 +1,4 @@
-/// <reference path="./LoginForm.d.ts" />
+/// <reference path="./RegisterForm.d.ts" />
 import React, { useState } from 'react';
 import {
   Card,
@@ -12,17 +12,16 @@ import { LoadingButton } from '@mui/lab';
 import * as yup from 'yup';
 // eslint-disable-next-line
 import { Form, Formik, Field, FieldProps } from 'formik';
-import { login } from 'src/api/users';
+import { register } from 'src/api/users';
 import useAuth from 'src/hooks/useAuth';
 
-export default function LoginForm(): JSX.Element {
+export default function RegisterForm(): JSX.Element {
   const { checkAuth } = useAuth();
   const [msg, setMsg] = useState('');
-
   return (
     <>
       <Card>
-        <CardHeader title="iniciar sesion" />
+        <CardHeader title="registrarse" />
         <CardContent>
           <Formik
             initialValues={{
@@ -32,7 +31,7 @@ export default function LoginForm(): JSX.Element {
             onSubmit={async (values: Values, { setSubmitting }) => {
               setSubmitting(true);
               const { username, password } = values;
-              await login(username, password).catch((err) => {
+              await register(username, password).catch((err) => {
                 if (err.isAxiosError) {
                   setMsg(err.response.data.message);
                   setTimeout(() => setMsg(''), 3500);

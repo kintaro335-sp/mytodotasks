@@ -1,5 +1,6 @@
 /// <reference path="./users.d.ts" />
-import axios from 'axios';
+// eslint-disable-next-line
+import axios, { AxiosError } from 'axios';
 import APIURL from '../config';
 const apiI = axios.create({ withCredentials: true });
 
@@ -13,7 +14,7 @@ export async function login(
       .then((response) => {
         resolve(response.data);
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         reject(err);
       });
   });
@@ -26,7 +27,7 @@ export async function logout(): Promise<response> {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         reject(err);
       });
   });
@@ -39,7 +40,27 @@ export async function isLogged(): Promise<response> {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        reject(err);
+      });
+  });
+}
+
+export async function register(
+  username: string,
+  password: string
+): Promise<Response> {
+  return new Promise((resolve, reject) => {
+    apiI
+      .post(
+        `${APIURL}/user/register`,
+        { username, password },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((err: AxiosError) => {
         reject(err);
       });
   });
