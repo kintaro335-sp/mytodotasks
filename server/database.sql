@@ -1,7 +1,9 @@
+-- @block
 CREATE DATABASE todotask;
 
 use todotask;
 
+-- @block
 CREATE TABLE tareas (
   id VARCHAR(36) NOT NULL,
   done BOOLEAN DEFAULT 0,
@@ -12,6 +14,7 @@ CREATE TABLE tareas (
   primary key (id)
 );
 
+-- @block
 CREATE TABLE users (
   id VARCHAR(36) NOT NULL,
   username VARCHAR(30) NOT NULL,
