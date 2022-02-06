@@ -1,0 +1,3 @@
+type CardViewProps = {
+  tasks: taskT[];
+};
