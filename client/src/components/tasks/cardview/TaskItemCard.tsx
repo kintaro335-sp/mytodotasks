@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import EditTask from '../EditTask';
 import { updateTask } from 'src/api/tasks';
+import DeleteButton from '../DeleteButton';
 import useTasksC from 'src/hooks/useTasksC';
 
 export default function TaskItemCard({ task }: TaskItemCardProps) {
@@ -23,6 +24,7 @@ export default function TaskItemCard({ task }: TaskItemCardProps) {
           title={nombre}
           action={
             <>
+              <DeleteButton id={id} />
               <EditTask task={task} />
               <Checkbox
                 checked={Boolean(done)}

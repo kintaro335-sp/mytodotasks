@@ -44,3 +44,16 @@ export async function addTask(task: taskTAdd): Promise<responseN> {
       });
   });
 }
+
+export async function deleteTask(id: string): Promise<responseN> {
+  return new Promise((resolve, reject) => {
+    apiT
+      .delete(`${APIURL}/tasks/${id}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}

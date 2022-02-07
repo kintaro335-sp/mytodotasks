@@ -10,16 +10,3 @@ type response = {
   data: userT;
 };
 
-interface taskI {
-  id: string;
-  nombre: string;
-  descripcion: string;
-  fecha: any;
-}
-
-type taskT = {
-  id: string | undefined;
-  done: boolean;
-  nombre: string;
-  descripcion: string;
-};

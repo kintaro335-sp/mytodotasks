@@ -3,7 +3,6 @@ type taskT = {
   done: boolean;
   nombre: string;
   descripcion: string;
-  fecha: string;
 };
 
 type taskTAdd = {

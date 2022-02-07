@@ -1,0 +1,4 @@
+
+type DeleteButtonProps = {
+  id: string;
+};
