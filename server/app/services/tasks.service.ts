@@ -13,7 +13,7 @@ class tasksService {
         : '';
     return new Promise((resolve, reject) =>
       db.query(
-        `SELECT * FROM tareas WHERE userid = "${userid}" ${limitP}`,
+        `SELECT * FROM tareas WHERE userid = "${userid}" ${limitP} ORDER BY fecha DESC`,
         (err, results) => {
           if (err) {
             throw boom.internal(err.message, err, 500);
