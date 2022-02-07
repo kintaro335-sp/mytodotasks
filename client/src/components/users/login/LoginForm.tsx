@@ -63,10 +63,10 @@ export default function LoginForm(): JSX.Element {
                         {...field}
                         value={values.username}
                         error={
-                          Boolean(touched.password) && Boolean(errors.password)
+                          Boolean(touched.username) && Boolean(errors.username)
                         }
                         helperText={
-                          Boolean(touched.password) && errors.password
+                          Boolean(touched.username) && errors.username
                         }
                       />
                     )}

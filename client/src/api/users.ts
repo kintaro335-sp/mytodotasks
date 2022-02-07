@@ -65,3 +65,19 @@ export async function register(
       });
   });
 }
+
+export async function changePassword(
+  password: string,
+  newPassword: string
+): Promise<response> {
+  return new Promise((resolve, reject) => {
+    apiI
+      .put(`${APIURL}/user/password`, { password, newPassword })
+      .then((resp) => {
+        resolve(resp.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}

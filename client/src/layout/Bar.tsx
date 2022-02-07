@@ -51,6 +51,12 @@ export default function Bar() {
         </Toolbar>
       </AppBar>
       <Menu open={open} onClose={clickClose} anchorEl={menuRef.current}>
+        <MenuItem component={NavLink} to="/" onClick={() => clickClose()}>
+          Home
+        </MenuItem>
+        <MenuItem component={NavLink} to="/passwd" onClick={() => clickClose()}>
+          Change Password
+        </MenuItem>
         <MenuItem
           onClick={async () => {
             clickClose();
