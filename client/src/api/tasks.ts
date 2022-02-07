@@ -16,3 +16,17 @@ export async function getTasks(): Promise<responseT> {
       });
   });
 }
+
+export async function updateTask(task: taskT): Promise<responseN> {
+  const { id, nombre, descripcion, done } = task;
+  return new Promise((resolve, reject) => {
+    apiT
+      .put(`${APIURL}/tasks/${id}`, { nombre, descripcion, done })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}

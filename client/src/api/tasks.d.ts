@@ -12,3 +12,10 @@ type responseT = {
   message: string;
   data: taskT[];
 };
+
+type responseN = {
+  status: string;
+  code: number;
+  message: string;
+  data: taskT[] | taskT;
+};
