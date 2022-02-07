@@ -6,6 +6,12 @@ type taskT = {
   fecha: string;
 };
 
+type taskTAdd = {
+  done: boolean;
+  nombre: string;
+  descripcion: string;
+};
+
 type responseT = {
   status: string;
   code: number;

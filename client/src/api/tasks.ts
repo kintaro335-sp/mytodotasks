@@ -30,3 +30,17 @@ export async function updateTask(task: taskT): Promise<responseN> {
       });
   });
 }
+
+export async function addTask(task: taskTAdd): Promise<responseN> {
+  const { done, nombre, descripcion } = task;
+  return new Promise((resolve, reject) => {
+    apiT
+      .post(`${APIURL}/tasks`, { done, nombre, descripcion })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}

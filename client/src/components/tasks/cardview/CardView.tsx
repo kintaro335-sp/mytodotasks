@@ -2,6 +2,7 @@
 import React from 'react';
 import { Grid } from '@mui/material';
 import TaskItemCard from './TaskItemCard';
+import AddTask from './AddTask';
 
 export default function CardView({ tasks }: CardViewProps) {
   return (
@@ -10,6 +11,7 @@ export default function CardView({ tasks }: CardViewProps) {
         {tasks.map((task) => (
           <TaskItemCard key={task.id} task={task} />
         ))}
+        <AddTask />
       </Grid>
     </>
   );
