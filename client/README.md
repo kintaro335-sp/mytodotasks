@@ -11,8 +11,7 @@ npm install
 setup the next env variables in .env file:
 
 ```.env
-REACT_APP_HOST=http://localhost
-REACT_APP_PORT=4000
+REACT_APP_HOST=http://localhost:4000
 ```
 ## commands
 

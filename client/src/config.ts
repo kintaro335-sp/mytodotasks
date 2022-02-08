@@ -1,7 +1,5 @@
 const host = process.env.REACT_APP_HOST;
 
-const port = process.env.REACT_APP_PORT;
-
-const APIURL = `${host}:${port}`;
+const APIURL = `${host}`;
 
 export default APIURL;
