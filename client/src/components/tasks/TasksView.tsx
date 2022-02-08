@@ -1,4 +1,3 @@
-/// <reference path="../../api/tasks.d.ts" />
 import React, { useState, useEffect, createContext, useCallback } from 'react';
 import {} from '@mui/material';
 import { CardView } from './cardview';
@@ -7,7 +6,7 @@ import { getTasks } from 'src/api/tasks';
 export const taskViewContext = createContext({ updateTasks: async () => {} });
 
 export default function TaskViewSelector() {
-  const [tasks, setTasks] = useState<taskT[]>([]);
+  const [tasks, setTasks] = useState<any[]>([]);
 
   const getTasksF = useCallback(async () => {
     await getTasks()
