@@ -8,7 +8,9 @@ create a user in the database or use user root
 
 install dependencies
 
-> npm install
+```bash
+npm install
+```
 
 before to start the server first you must config the env variables
 
@@ -32,14 +34,20 @@ SERVER_PORT is optional, the server starts in port 4000 by default
 
 start the server with:
 
-> npm start
+```bash
+npm start
+```
 
 ## commands
 
 starts the server normally:
 
-> npm start
+```bash
+npm start
+```
 
 start the server in dev mode:
 
-> npm run dev
+```bash
+npm run dev
+```
