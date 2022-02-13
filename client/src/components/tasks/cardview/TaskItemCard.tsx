@@ -12,6 +12,7 @@ import EditTask from '../EditTask';
 import { updateTask } from 'src/api/tasks';
 import DeleteButton from '../DeleteButton';
 import useTasksC from 'src/hooks/useTasksC';
+import ReactMarkDown from 'react-markdown';
 
 export default function TaskItemCard({ task }: TaskItemCardProps) {
   const { id, nombre, descripcion, done } = task;
@@ -48,7 +49,9 @@ export default function TaskItemCard({ task }: TaskItemCardProps) {
           }
         />
         <CardContent>
-          <Box>{descripcion}</Box>
+          <Box>
+            <ReactMarkDown>{descripcion}</ReactMarkDown>
+          </Box>
           {msgE}
         </CardContent>
       </Card>
