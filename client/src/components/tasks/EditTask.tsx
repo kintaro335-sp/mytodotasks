@@ -39,7 +39,7 @@ export default function EditTask({ task }: EditTaskProps) {
       <IconButton onClick={clickOpen}>
         <Edit />
       </IconButton>
-      <Dialog open={open} onClose={clickClose}>
+      <Dialog open={open} onClose={clickClose} maxWidth="lg">
         <AppBar position="relative">
           <Toolbar>
             <IconButton onClick={clickClose}>
@@ -144,7 +144,7 @@ export default function EditTask({ task }: EditTaskProps) {
                         }
                         multiline
                         minRows={3}
-                        maxRows={6}
+                        maxRows={8}
                         fullWidth
                       />
                     )}
