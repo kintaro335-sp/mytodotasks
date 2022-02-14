@@ -2,11 +2,12 @@
 import db from '../libs/mysql/mysqlclient';
 import taskSchema from '../schemas/task';
 import boom from '@hapi/boom';
+import { decodeBase64, encodeBase64 } from '../utils/base64';
 
 class tasksService {
   constructor() {}
 
-  async find({ userid, limit, page }: queryParamsTask): Promise<Array<taskI>> {
+  async find({ userid, limit, page }: queryParamsTask): Promise<taskT[]> {
     const limitP =
       page !== undefined && limit !== undefined
         ? `LIMIT ${page}, ${Number(limit)}`
@@ -14,11 +15,21 @@ class tasksService {
     return new Promise((resolve, reject) =>
       db.query(
         `SELECT * FROM tareas WHERE userid = "${userid}" ${limitP} ORDER BY fecha DESC`,
-        (err, results) => {
+        (err, results: taskT[]) => {
           if (err) {
             throw boom.internal(err.message, err, 500);
           } else {
-            resolve(results);
+            const tasksdecoded = results.map(
+              ({ descripcion, id, nombre, done }) => {
+                return {
+                  descripcion: decodeBase64(descripcion),
+                  done,
+                  id,
+                  nombre
+                };
+              }
+            );
+            resolve(tasksdecoded);
           }
         }
       )
@@ -29,11 +40,17 @@ class tasksService {
     return new Promise((resolve, reject) =>
       db.query(
         `SELECT * FROM tareas WHERE id="${id}" && userid="${userid}"`,
-        (err, results) => {
+        (err, results: taskT[]) => {
           if (err) {
             throw boom.internal(err.message, err, 500);
           } else {
-            resolve(results[0]);
+            const { descripcion, done, id, nombre } = results[0];
+            resolve({
+              done,
+              id,
+              nombre,
+              descripcion: decodeBase64(descripcion)
+            });
           }
         }
       )
@@ -47,7 +64,9 @@ class tasksService {
         .then(() => {
           const { id, nombre, descripcion, done } = task;
           db.query(
-            `INSERT INTO tareas (id, nombre, descripcion, done, userid) VALUES ("${id}", "${nombre}", "${descripcion}", ${done}, "${userid}")`,
+            `INSERT INTO tareas (id, nombre, descripcion, done, userid) VALUES ("${id}", "${nombre}", "${encodeBase64(
+              descripcion
+            )}", ${done}, "${userid}")`,
             (err, results, fie) => {
               if (err) {
                 throw boom.internal(err.message, err, 500);
@@ -80,7 +99,9 @@ class tasksService {
         .then(() => {
           const { nombre, descripcion, done } = task;
           db.query(
-            `UPDATE tareas SET nombre="${nombre}", descripcion="${descripcion}", done=${done} WHERE id="${task.id}" && userid="${userid}"`,
+            `UPDATE tareas SET nombre="${nombre}", descripcion="${encodeBase64(
+              descripcion
+            )}", done=${done} WHERE id="${task.id}" && userid="${userid}"`,
             (err, results, fie) => {
               if (err) {
                 throw boom.internal(err.message, err, 500);
