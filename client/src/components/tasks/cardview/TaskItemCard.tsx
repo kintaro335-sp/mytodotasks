@@ -49,7 +49,9 @@ export default function TaskItemCard({ task }: TaskItemCardProps) {
           }
         />
         <CardContent>
-          <Box>
+          <Box
+            sx={{ minHeight: '75px', overflowY: 'scroll', maxHeight: '82px' }}
+          >
             <ReactMarkDown>{descripcion}</ReactMarkDown>
           </Box>
           {msgE}

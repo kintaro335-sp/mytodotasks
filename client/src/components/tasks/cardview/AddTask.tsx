@@ -11,11 +11,12 @@ import {
   Checkbox,
   Box
 } from '@mui/material';
-import * as yup from 'yup';
 // eslint-disable-next-line
 import { Form, Formik, Field, FieldProps } from 'formik';
 import { addTask } from 'src/api/tasks';
 import useTasksC from 'src/hooks/useTasksC';
+// schema
+import { taskSchema } from 'src/utils/schemas/taskSchema';
 
 export default function AddTask() {
   const [addT, setAddT] = useState(false);
@@ -57,13 +58,9 @@ export default function AddTask() {
                 console.error(err);
               }
             }}
-            validationSchema={yup.object().shape({
-              done: yup.bool().required(),
-              nombre: yup.string().required().min(10).max(50),
-              descripcion: yup.string().required().max(16777214)
-            })}
+            validationSchema={taskSchema}
           >
-            <Form>
+            <Form autoComplete="off">
               <CardHeader
                 title={
                   <Field

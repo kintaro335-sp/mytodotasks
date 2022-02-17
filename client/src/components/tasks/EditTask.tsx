@@ -13,12 +13,13 @@ import {
   Button
 } from '@mui/material';
 import { Edit, Close } from '@mui/icons-material';
-import * as yup from 'yup';
 // eslint-disable-next-line
 import { Form, Formik, Field, FieldProps } from 'formik';
 // api
 import { updateTask } from 'src/api/tasks';
 import useTasksC from 'src/hooks/useTasksC';
+// schema
+import { taskSchema } from 'src/utils/schemas/taskSchema';
 
 export default function EditTask({ task }: EditTaskProps) {
   const { id, nombre, descripcion, done } = task;
@@ -76,11 +77,7 @@ export default function EditTask({ task }: EditTaskProps) {
                 console.error(err);
               }
             }}
-            validationSchema={yup.object().shape({
-              done: yup.bool().required(),
-              nombre: yup.string().required().min(10).max(50),
-              descripcion: yup.string().required().max(16777214)
-            })}
+            validationSchema={taskSchema}
           >
             <Form>
               <Grid container spacing={3}>
