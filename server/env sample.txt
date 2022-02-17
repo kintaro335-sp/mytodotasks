@@ -5,4 +5,4 @@ SQL_SERVER_HOST=localhost
 SQL_SERVER_DATABASE=todotasks
 SERVER_PORT=5000
 COOKIE_SECRET=cat
-SERVER_CORS=http://localhost
+SERVER_CORS=["http://localhost:3000","http://192.168.50.45:3000"]

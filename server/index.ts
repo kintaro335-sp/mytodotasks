@@ -16,8 +16,17 @@ const {
 }: any = require('./app/middlewares/error.handler');
 
 const oneDay = 1000 * 60 * 60 * 24;
+
+const whitelist = JSON.parse(process.env.SERVER_CORS || `[]`);
+
 const corsOptions = {
-  origin: process.env.SERVER_CORS || '*',
+  origin: function (origin: any, callback: any) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 };
 app.use(cors(corsOptions));
