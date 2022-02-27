@@ -18,6 +18,7 @@ CREATE TABLE tareas (
 CREATE TABLE users (
   id VARCHAR(36) NOT NULL,
   username VARCHAR(30) NOT NULL,
-  passwordu VARCHAR(64) NOT NULL,
-  primary key (id)
+  passwordu VARCHAR(161) NOT NULL,
+  primary key (id),
+  unique (username)
 );

@@ -3,6 +3,7 @@ import db from '../libs/mysql/mysqlclient';
 import userSchema, { changePasswordSchema } from '../schemas/users.schema';
 import { SHA256 } from 'crypto-js';
 import boom from '@hapi/boom';
+import { comparePasswords, createPassword } from '../utils/password';
 
 class usersService {
   async userAlreadyExist(userid: string): Promise<userT> {
@@ -43,15 +44,16 @@ class usersService {
         .validate(user)
         .then(() => {
           const { username, password } = user;
-          const encryptedP = SHA256(password).toString();
           db.query(
-            `SELECT id FROM users WHERE username = "${username}" && passwordu = "${encryptedP}" LIMIT 1`,
+            `SELECT id, passwordu FROM users WHERE username = "${username}" LIMIT 1`,
             (err, results, fie) => {
               if (err) {
                 throw boom.internal(err.message, err, 500);
               }
-              const userid = results[0]?.id;
-              if (!Boolean(userid)) {
+              const user = results[0];
+              const userid = user?.id;
+              const correctPassword = comparePasswords(password, user.passwdu);
+              if (!Boolean(userid) || !Boolean(correctPassword)) {
                 resolve({
                   code: 400,
                   data: undefined,
@@ -85,7 +87,7 @@ class usersService {
         .validate(user)
         .then(async () => {
           const { id, username, password } = user;
-          const encryptedP = SHA256(password).toString();
+          const encryptedP = createPassword(password);
           const userExist = await this.userNameAlreadyExist(username);
           if (userExist) {
             throw boom.conflict('this user already exist');
@@ -118,7 +120,7 @@ class usersService {
             resolve({
               code: 400,
               data: '',
-              message: err.errors.toString(),
+              message: err?.errors?.toString(),
               status: 'error'
             });
           }
@@ -127,7 +129,7 @@ class usersService {
   }
 
   async setPassword(userid: string, newPassword: string): Promise<response> {
-    const newPasswdE = SHA256(newPassword).toString();
+    const newPasswdE = createPassword(newPassword);
     return new Promise((resolve, reject) =>
       db.query(
         `UPDATE users SET passwordu="${newPasswdE}" WHERE id="${userid}"`,
@@ -162,8 +164,7 @@ class usersService {
                 throw boom.badRequest('user does not exist');
               }
               const passwdu = results[0].passwordu;
-              const passwdIn = SHA256(password).toString();
-              if (passwdu === passwdIn) {
+              if (comparePasswords(password, passwdu)) {
                 resolve(await this.setPassword(userid, newPassword));
               } else {
                 resolve({
