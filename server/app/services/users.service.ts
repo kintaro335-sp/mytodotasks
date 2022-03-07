@@ -52,7 +52,7 @@ class usersService {
               }
               const user = results[0];
               const userid = user?.id;
-              const correctPassword = comparePasswords(password, user.passwdu);
+              const correctPassword = comparePasswords(password, user?.passwdu);
               if (!Boolean(userid) || !Boolean(correctPassword)) {
                 resolve({
                   code: 400,
