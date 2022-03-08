@@ -6,10 +6,13 @@ export function createPassword(password: string): string {
   return `${salt}:${hashedPassword}`;
 }
 
-export function comparePasswords(passwordInput: string, passwordDB: string): boolean {
-  if(Boolean(passwordInput) && Boolean(passwordDB)){
+export function comparePasswords(
+  passwordInput: string,
+  passwordDB: string
+): boolean {
+  if (Boolean(passwordInput) && Boolean(passwordDB)) {
     const [salt, key] = passwordDB.split(':');
-    const hashedBuffer = scryptSync(passwordInput, salt, 64).toString('hex');
+    const hashedBuffer = scryptSync(passwordInput, salt, 64);
 
     const keyBuffer = Buffer.from(key, 'hex');
 

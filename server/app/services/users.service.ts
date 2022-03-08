@@ -1,7 +1,6 @@
 /// <reference path="../../index.d.ts" />
 import db from '../libs/mysql/mysqlclient';
 import userSchema, { changePasswordSchema } from '../schemas/users.schema';
-import { SHA256 } from 'crypto-js';
 import boom from '@hapi/boom';
 import { comparePasswords, createPassword } from '../utils/password';
 
@@ -52,7 +51,7 @@ class usersService {
               }
               const user = results[0];
               const userid = user?.id;
-              const correctPassword = comparePasswords(password, user?.passwdu);
+              const correctPassword = comparePasswords(password, user?.passwordu);
               if (!Boolean(userid) || !Boolean(correctPassword)) {
                 resolve({
                   code: 400,
