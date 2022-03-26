@@ -1,20 +1,19 @@
 import React, { Suspense } from 'react';
-import AuthContext from './contexts/AuthContext';
 import ThemeProviderC from './theme';
 import Loading from './pages/Loading';
 import Rutas from './routes';
 import Bar from './layout/Bar';
+import useAuth from './hooks/useAuth';
 
 function App(): JSX.Element {
+  const { isInicialized } = useAuth();
   return (
     <>
       <ThemeProviderC>
-        <AuthContext>
-          <Bar />
-          <Suspense fallback={<Loading />}>
-            <Rutas />
-          </Suspense>
-        </AuthContext>
+        <Bar />
+        <Suspense fallback={<Loading />}>
+          {isInicialized ? <Rutas /> : <Loading />}
+        </Suspense>
       </ThemeProviderC>
     </>
   );
