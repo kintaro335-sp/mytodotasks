@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import AuthContext from './contexts/AuthContext';
 import ThemeProviderC from './theme';
+import Loading from './pages/Loading';
 import Rutas from './routes';
 import Bar from './layout/Bar';
 
@@ -10,7 +11,9 @@ function App(): JSX.Element {
       <ThemeProviderC>
         <AuthContext>
           <Bar />
-          <Rutas />
+          <Suspense fallback={<Loading />}>
+            <Rutas />
+          </Suspense>
         </AuthContext>
       </ThemeProviderC>
     </>
