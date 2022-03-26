@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { taskViewContext } from 'src/components/tasks/TasksView';
+import { taskViewContext } from '../components/tasks/TasksView';
 
 const useTasksC = () => useContext(taskViewContext);
 

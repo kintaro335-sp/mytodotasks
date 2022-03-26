@@ -2,8 +2,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/styles';
-import { RegisterForm } from 'src/components/users/register';
-import useAuth from 'src/hooks/useAuth';
+import { RegisterForm } from '../../components/users/register';
+import useAuth from '../../hooks/useAuth';
 
 export default function Register(): JSX.Element {
   const { logged } = useAuth();

@@ -12,8 +12,8 @@ import { LoadingButton } from '@mui/lab';
 import * as yup from 'yup';
 // eslint-disable-next-line
 import { Form, Formik, Field, FieldProps } from 'formik';
-import { register } from 'src/api/users';
-import useAuth from 'src/hooks/useAuth';
+import { register } from '../../../api/users';
+import useAuth from '../../../hooks/useAuth';
 
 export default function RegisterForm(): JSX.Element {
   const { checkAuth } = useAuth();

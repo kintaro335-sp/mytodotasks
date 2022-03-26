@@ -1,4 +1,4 @@
-const host = process.env.REACT_APP_HOST;
+const host = import.meta.env.VITE_HOST;
 
 const APIURL = `${host}`;
 

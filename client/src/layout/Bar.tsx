@@ -10,8 +10,8 @@ import {
   MenuItem
 } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
-import { logout } from 'src/api/users';
-import useAuth from 'src/hooks/useAuth';
+import { logout } from '../api/users';
+import useAuth from '../hooks/useAuth';
 
 export default function Bar() {
   const { logged, username, checkAuth } = useAuth();

@@ -1,6 +1,6 @@
 /// <reference path="./tasks.d.ts" />
 import axios from 'axios';
-import APIURL from 'src/config';
+import APIURL from '../config';
 
 const apiT = axios.create({ withCredentials: true });
 

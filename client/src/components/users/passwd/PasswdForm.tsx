@@ -12,7 +12,7 @@ import {
 import * as yup from 'yup';
 // eslint-disable-next-line
 import { Formik, Form, Field, FieldProps } from 'formik';
-import { changePassword } from 'src/api/users';
+import { changePassword } from '../../../api/users';
 
 export default function PasswdForm() {
   const [msg, setMsg] = useState('');

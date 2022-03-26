@@ -13,10 +13,10 @@ import {
 } from '@mui/material';
 // eslint-disable-next-line
 import { Form, Formik, Field, FieldProps } from 'formik';
-import { addTask } from 'src/api/tasks';
-import useTasksC from 'src/hooks/useTasksC';
+import { addTask } from '../../../api/tasks';
+import useTasksC from '../../../hooks/useTasksC';
 // schema
-import { taskSchema } from 'src/utils/schemas/taskSchema';
+import { taskSchema } from '../../../utils/schemas/taskSchema';
 
 export default function AddTask() {
   const [addT, setAddT] = useState(false);

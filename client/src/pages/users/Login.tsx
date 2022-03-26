@@ -2,8 +2,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/styles';
-import { LoginForm } from 'src/components/users/login';
-import useAuth from 'src/hooks/useAuth';
+import { LoginForm } from '../../components/users/login';
+import useAuth from '../../hooks/useAuth';
 
 export default function Login(): JSX.Element {
   const { logged } = useAuth();

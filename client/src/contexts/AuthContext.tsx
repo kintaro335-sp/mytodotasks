@@ -1,6 +1,6 @@
 /// <reference path="./AuthContext.d.ts" />
 import React, { useState, useEffect, createContext, useCallback } from 'react';
-import { isLogged } from 'src/api/users';
+import { isLogged } from '../api/users';
 
 export const authContext = createContext({
   username: '',

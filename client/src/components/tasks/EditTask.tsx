@@ -16,10 +16,10 @@ import { Edit, Close } from '@mui/icons-material';
 // eslint-disable-next-line
 import { Form, Formik, Field, FieldProps } from 'formik';
 // api
-import { updateTask } from 'src/api/tasks';
-import useTasksC from 'src/hooks/useTasksC';
+import { updateTask } from '../../api/tasks';
+import useTasksC from '../../hooks/useTasksC';
 // schema
-import { taskSchema } from 'src/utils/schemas/taskSchema';
+import { taskSchema } from '../../utils/schemas/taskSchema';
 
 export default function EditTask({ task }: EditTaskProps) {
   const { id, nombre, descripcion, done } = task;

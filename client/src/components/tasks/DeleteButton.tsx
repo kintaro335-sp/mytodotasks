@@ -2,8 +2,8 @@
 import React from 'react';
 import { IconButton } from '@mui/material';
 import { Delete } from '@mui/icons-material';
-import { deleteTask } from 'src/api/tasks';
-import useTasksC from 'src/hooks/useTasksC';
+import { deleteTask } from '../../api/tasks';
+import useTasksC from '../../hooks/useTasksC';
 
 export default function DeleteButton({ id }: DeleteButtonProps) {
   const { updateTasks } = useTasksC();

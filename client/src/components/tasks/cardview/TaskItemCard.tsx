@@ -9,9 +9,9 @@ import {
   Checkbox
 } from '@mui/material';
 import EditTask from '../EditTask';
-import { updateTask } from 'src/api/tasks';
+import { updateTask } from '../../../api/tasks';
 import DeleteButton from '../DeleteButton';
-import useTasksC from 'src/hooks/useTasksC';
+import useTasksC from '../../../hooks/useTasksC';
 import ReactMarkDown from 'react-markdown';
 
 export default function TaskItemCard({ task }: TaskItemCardProps) {

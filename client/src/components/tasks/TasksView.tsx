@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useCallback } from 'react';
 import {} from '@mui/material';
 import { CardView } from './cardview';
-import { getTasks } from 'src/api/tasks';
+import { getTasks } from '../../api/tasks';
 
 export const taskViewContext = createContext({ updateTasks: async () => {} });
 

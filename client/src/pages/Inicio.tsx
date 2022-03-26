@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
-import TaskViewS from 'src/components/tasks/TasksView';
-import useAuth from 'src/hooks/useAuth';
+import TaskViewS from '../components/tasks/TasksView';
+import useAuth from '../hooks/useAuth';
 
 export default function Inicio() {
   const { logged } = useAuth();

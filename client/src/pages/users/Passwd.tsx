@@ -2,8 +2,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/styles';
-import { PasswdForm } from 'src/components/users/passwd';
-import useAuth from 'src/hooks/useAuth';
+import { PasswdForm } from '../../components/users/passwd';
+import useAuth from '../../hooks/useAuth';
 
 export default function Passwd() {
   const { logged } = useAuth();
